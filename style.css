@@ -95,5 +95,17 @@ body, html {
   margin-top: 10px;
 }
 
+body.login-page {
+  background-size: cover;        /* makes image fill entire screen */
+  background-position: center;   /* centers it */
+  background-repeat: no-repeat;  /* no tiling */
+  background-attachment: fixed;  /* keeps it fixed on scroll */
+  min-height: 100vh;             /* ensures full viewport height */
+  margin: 0;
+  padding: 0;
+}
+
+
+
 
 
