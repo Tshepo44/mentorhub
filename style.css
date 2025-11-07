@@ -105,6 +105,17 @@ body.login-page {
   padding: 0;
 }
 
+.top-left-logo {
+  position: absolute;   /* places it outside the normal flow */
+  top: 10px;            /* distance from top of page */
+  left: 10px;           /* distance from left edge */
+  width: 120px;         /* adjust size if needed */
+  height: auto;
+  z-index: 1000;        /* ensures it stays on top */
+}
+
+
+
 
 
 
