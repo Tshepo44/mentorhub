@@ -94,3 +94,31 @@ body, html {
   font-size: 12px;
   margin-top: 10px;
 }
+
+/* ===== BACKGROUND FOR EACH UNIVERSITY ===== */
+body.uj-page {
+  background: url("assets/banners/uj-banner.jpg") no-repeat center center fixed;
+  background-size: cover;
+}
+
+body.up-page {
+  background: url("assets/banners/up-banner.jpg") no-repeat center center fixed;
+  background-size: cover;
+}
+
+body.wits-page {
+  background: url("assets/banners/wits-banner.jpg") no-repeat center center fixed;
+  background-size: cover;
+}
+
+/* OPTIONAL: make text visible on images */
+.login-container {
+  background: rgba(255, 255, 255, 0.85);
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 400px;
+  margin: 80px auto;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
+
+
