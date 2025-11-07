@@ -114,6 +114,39 @@ body.login-page {
   z-index: 1000;        /* ensures it stays on top */
 }
 
+/* --- Footer styling --- */
+.footer {
+  font-size: 13px;
+  color: white;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.footer a {
+  color: #ffffffcc; /* light transparent white */
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+/* --- Forgot Password link --- */
+.forgot {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #ffffffcc;
+  text-decoration: none;
+}
+
+.forgot:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+
 
 
 
