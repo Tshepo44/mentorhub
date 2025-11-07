@@ -148,6 +148,23 @@ body.login-page {
   text-decoration: underline;
 }
 
+/* --- Footer Links Section --- */
+.footer-links {
+  text-align: center;
+  margin-top: 8px; /* adds space between lines */
+}
+
+.footer-links a {
+  color: black;
+  text-decoration: none;
+  margin: 0 5px;
+  font-weight: 500;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
 
 
 
