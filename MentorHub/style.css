@@ -1,1 +1,45 @@
+/* Reset */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Choose Page Styling */
+.choose-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #f7f7f7;
+}
+
+.container {
+  text-align: center;
+}
+
+.university-buttons button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: white;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  padding: 15px 25px;
+  margin: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 16px;
+}
+
+.university-buttons button img {
+  width: 40px;
+  height: 40px;
+}
+
+.university-buttons button:hover {
+  background: #e0f0ff;
+}
+
 
