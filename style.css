@@ -284,6 +284,40 @@ text-decoration: underline;
 
 } 
 
+/* ==============================
+   PORTAL STYLES
+   ============================== */
+.portal-page {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.portal-container {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 50px;
+  border-radius: 20px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+}
+
+/* --- WITS THEMES (blue, grey, gold) --- */
+.wits-student {
+  background: linear-gradient(135deg, #002366, #708090, #FFD700);
+}
+.wits-tutor {
+  background: linear-gradient(135deg, #1E3A8A, #6B7280, #FBBF24);
+}
+.wits-counsellor {
+  background: linear-gradient(135deg, #0A2647, #7C8A98, #FFD700);
+}
+.wits-admin {
+  background: linear-gradient(135deg, #001F3F, #808080, #DAA520);
+}
+
 
 
 
