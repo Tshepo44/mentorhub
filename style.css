@@ -318,6 +318,18 @@ text-decoration: underline;
   background: linear-gradient(135deg, #001F3F, #808080, #DAA520);
 }
 
+/* --- UJ THEMES (light orange with white lines) --- */
+.uj-student, .uj-tutor, .uj-counsellor, .uj-admin {
+  background: repeating-linear-gradient(
+    45deg,
+    #FFA500,
+    #FFA500 40px,
+    #FFFFFF 40px,
+    #FFFFFF 80px
+  );
+}
+
+
 
 
 
