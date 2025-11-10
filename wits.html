@@ -1,31 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WITS Login - MentorHub</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WITS | MentorHub Login</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body class="login-page" style="background-image: url('assets/banners/wits-bg.jpg');">
-  <img src="assets/logos/wits.png" alt="WITS Logo" class="top-left-logo">
+<body class="wits-bg">
+  <div class="login-container">
+    <img src="assets/wits-logo.png" alt="WITS Logo" class="uni-logo" />
+    <img src="assets/wits-banner.jpg" alt="WITS Banner" class="banner" />
+    <h2>University of the Witwatersrand</h2>
 
-  <div class="login-box">
-    <h2>Mentor Hub🎓</h2>
-    <input type="text" placeholder="Username"><br>
-    <input type="password" placeholder="Password"><br>
-    <button>Login</button>
-<p><a href="#" class="forgot">Forgot Password?</a></p>
-
-<p class="footer">© 2025 University of Pretoria | MentorHub</p>
-<div class="footer-links">
-  <a href="#">Privacy Policy</a> |
-  <a href="#">Terms of Use</a> |
-  <a href="#">Contact Support</a>
-</div>
-
-
+    <form id="loginForm">
+      <input type="text" id="username" placeholder="Email or Student ID" required />
+      <input type="password" id="password" placeholder="Password" required />
+      <button type="submit">Login</button>
+      <p id="error" class="error"></p>
+    </form>
   </div>
 
-
+  <script src="app.js"></script>
 </body>
 </html>
+
