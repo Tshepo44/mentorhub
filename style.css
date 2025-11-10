@@ -331,6 +331,17 @@ text-decoration: underline;
   background: linear-gradient(135deg, #87CEEB, #B22222, #FFD700);
 }
 
+/* --- Portal Top Left Logo --- */
+.portal-logo {
+  position: absolute;
+  top: 10px;      /* distance from top */
+  left: 10px;     /* distance from left */
+  width: 120px;   /* adjust as needed */
+  height: auto;
+  z-index: 1000;  /* stays on top of everything */
+}
+
+
 
 
 
