@@ -288,6 +288,7 @@ text-decoration: underline;
    PORTAL STYLES
    ============================== */
 .portal-page {
+  position: relative;        /* 👈 This line is the fix */
   height: 100vh;
   display: flex;
   justify-content: center;
@@ -296,6 +297,7 @@ text-decoration: underline;
   text-align: center;
   font-family: 'Segoe UI', Arial, sans-serif;
 }
+
 
 .portal-container {
   background: rgba(0, 0, 0, 0.5);
@@ -340,6 +342,7 @@ text-decoration: underline;
   height: auto;
   z-index: 1000;  /* stays on top of everything */
 }
+
 
 
 
