@@ -329,6 +329,11 @@ text-decoration: underline;
   );
 }
 
+/* --- UP THEMES (light blue, red, gold) --- */
+.up-student, .up-tutor, .up-counsellor, .up-admin {
+  background: linear-gradient(135deg, #87CEEB, #B22222, #FFD700);
+}
+
 
 
 
