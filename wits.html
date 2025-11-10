@@ -1,62 +1,55 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WITS Login - MentorHub</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 
-<html lang="en"> 
+<body class="login-page" style="background-image: url('assets/banners/wits-bg.jpg');">
 
-<head> 
+  <!-- Top Left Logo -->
+  <img src="assets/logos/wits.png" alt="WITS Logo" class="top-left-logo">
 
-  <meta charset="UTF-8"> 
+  <!-- Login Box -->
+  <div class="login-box">
+    <h2>Mentor Hub🎓</h2>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <!-- Login Inputs -->
+    <input type="text" id="username" placeholder="Username"><br>
+    <input type="password" id="password" placeholder="Password"><br>
 
-  <title>WITS Login - MentorHub</title> 
+    <!-- NEW: Role Dropdown -->
+    <select id="role">
+      <option value="student">Student</option>
+      <option value="tutor">Tutor</option>
+      <option value="counsellor">Counsellor</option>
+      <option value="admin">Admin</option>
+    </select><br>
 
-  <link rel="stylesheet" href="style.css"> 
+    <button onclick="login()">Login</button>
 
-</head> 
+    <p><a href="#" class="forgot">Forgot Password?</a></p>
 
-<body class="login-page" style="background-image: url('assets/banners/wits-bg.jpg');"> 
+    <p class="footer">© 2025 University of Wits | MentorHub</p>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a> |
+      <a href="#">Terms of Use</a> |
+      <a href="#">Contact Support</a>
+    </div>
+  </div>
 
-  <img src="assets/logos/wits.png" alt="WITS Logo" class="top-left-logo"> 
+  <!-- Redirect Script -->
+  <script>
+    function login() {
+      const role = document.getElementById('role').value;
+      // redirect to correct portal
+      window.location.href = `wits-${role}.html`;
+    }
+  </script>
 
-  
+</body>
+</html>
 
-  <div class="login-box"> 
-
-    <h2>Mentor Hub🎓</h2> 
-
-    <input type="text" placeholder="Username"><br> 
-
-    <input type="password" placeholder="Password"><br> 
-
-    <button>Login</button> 
-
-<p><a href="#" class="forgot">Forgot Password?</a></p> 
-
-  
-
-<p class="footer">© 2025 University of Wits | MentorHub</p> 
-
-<div class="footer-links"> 
-
-  <a href="#">Privacy Policy</a> | 
-
-  <a href="#">Terms of Use</a> | 
-
-  <a href="#">Contact Support</a> 
-
-</div> 
-
-  
-
-  
-
-  </div> 
-
-  
-
-  
-
-</body> 
-
-</html> 
 
