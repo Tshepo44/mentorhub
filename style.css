@@ -318,21 +318,19 @@ text-decoration: underline;
   background: linear-gradient(135deg, #001F3F, #808080, #DAA520);
 }
 
-/* --- UJ THEMES (light orange with white lines) --- */
+/* --- UJ THEMES (light orange fading to white) --- */
 .uj-student, .uj-tutor, .uj-counsellor, .uj-admin {
-  background: repeating-linear-gradient(
-    45deg,
-    #FFA500,
-    #FFA500 40px,
-    #FFFFFF 40px,
-    #FFFFFF 80px
-  );
+  background: linear-gradient(to bottom right, #FFDAB9, #FFFFFF); /* light orange to white */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 /* --- UP THEMES (light blue, red, gold) --- */
 .up-student, .up-tutor, .up-counsellor, .up-admin {
   background: linear-gradient(135deg, #87CEEB, #B22222, #FFD700);
 }
+
 
 
 
