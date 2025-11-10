@@ -335,13 +335,16 @@ text-decoration: underline;
 
 /* --- Portal Top Left Logo --- */
 .portal-logo {
-  position: absolute;
-  top: 10px;      /* distance from top */
-  left: 10px;     /* distance from left */
-  width: 120px;   /* adjust as needed */
+  position: fixed; /* always visible even with scroll */
+  top: 15px;
+  left: 15px;
+  width: 130px;
   height: auto;
-  z-index: 1000;  /* stays on top of everything */
+  z-index: 9999; /* ensures it’s above any layer */
+  display: block; /* force visible */
 }
+
+
 
 
 
