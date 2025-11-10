@@ -319,6 +319,20 @@ text-decoration: underline;
 .wits-admin {
   background: linear-gradient(135deg, #001F3F, #808080, #DAA520);
 }
+/* --- WITS LOGO POSITION (separate from others) --- */
+.wits-student .portal-logo,
+.wits-tutor .portal-logo,
+.wits-counsellor .portal-logo,
+.wits-admin .portal-logo {
+  position: fixed;       /* stays at the top while scrolling */
+  top: 15px;             /* from top edge */
+  left: 15px;            /* from left edge */
+  width: 130px;          /* size of logo */
+  height: auto;
+  z-index: 9999;         /* ensures it appears above everything */
+  display: block;
+}
+
 
 /* --- UJ THEMES (light orange fading to white) --- */
 .uj-student, .uj-tutor, .uj-counsellor, .uj-admin {
@@ -343,6 +357,7 @@ text-decoration: underline;
   z-index: 9999; /* ensures it’s above any layer */
   display: block; /* force visible */
 }
+
 
 
 
