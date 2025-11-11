@@ -2,10 +2,9 @@
 tutor-app.js
 Tutor-facing frontend logic (UJ, UP, WITS Tutor Portals)
 
-- Reuses the same visual layout from app.js (student portal)
+- Reuses the same layout from app.js (student portal)
 - Does NOT modify logos or backgrounds
-- Replaces only the central “Welcome” area with Tutor Dashboard
-- Uses localStorage for demo
+- Replaces only the “Welcome” section with Tutor Dashboard
 */
 
 (function () {
@@ -14,9 +13,9 @@ Tutor-facing frontend logic (UJ, UP, WITS Tutor Portals)
   const APP_NAMESPACE = 'uni-help-tutors';
 
   // ---------------- HELPERS ----------------
-  function qs(sel, root = document) { return root.querySelector(sel); }
-  function qsa(sel, root = document) { return Array.from(root.querySelectorAll(sel)); }
-  function el(tag, attrs = {}, children = []) {
+  const qs = (s, r = document) => r.querySelector(s);
+  const qsa = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const el = (tag, attrs = {}, children = []) => {
     const node = document.createElement(tag);
     for (const k in attrs) {
       if (k === 'class') node.className = attrs[k];
@@ -28,32 +27,29 @@ Tutor-facing frontend logic (UJ, UP, WITS Tutor Portals)
       else if (c instanceof Node) node.appendChild(c);
     });
     return node;
-  }
-  function uid(prefix = '') { return prefix + Date.now().toString(36) + Math.random().toString(36).slice(2,8); }
+  };
+  const uid = (prefix = '') =>
+    prefix + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
 
-  function saveState(key, value) {
-    const data = JSON.parse(localStorage.getItem(APP_NAMESPACE) || '{}');
-    data[key] = value;
-    localStorage.setItem(APP_NAMESPACE, JSON.stringify(data));
-  }
-  function loadState(key, def = null) {
-    const data = JSON.parse(localStorage.getItem(APP_NAMESPACE) || '{}');
-    return (data && key in data) ? data[key] : def;
-  }
+  const saveState = (k, v) => {
+    const d = JSON.parse(localStorage.getItem(APP_NAMESPACE) || '{}');
+    d[k] = v;
+    localStorage.setItem(APP_NAMESPACE, JSON.stringify(d));
+  };
+  const loadState = (k, def = null) => {
+    const d = JSON.parse(localStorage.getItem(APP_NAMESPACE) || '{}');
+    return (d && k in d) ? d[k] : def;
+  };
 
   // -------------- PAGE DETECTION ---------------
-  function detectUniversity() {
-    const path = window.location.pathname.toLowerCase();
+  const detectUniversity = () => {
+    const path = location.pathname.toLowerCase();
     if (path.includes('uj')) return 'uj';
     if (path.includes('up')) return 'up';
     if (path.includes('wits')) return 'wits';
     return 'uj';
-  }
-
-  function isTutorPage() {
-    const f = window.location.pathname.toLowerCase();
-    return f.includes('-tutor') || f.includes('tutor');
-  }
+  };
+  const isTutorPage = () => /tutor/.test(location.pathname.toLowerCase());
 
   // -------------- FAKE SERVER (DEMO) ----------------
   const fakeServer = {
@@ -69,8 +65,8 @@ Tutor-facing frontend logic (UJ, UP, WITS Tutor Portals)
     loginTutor(creds) {
       return new Promise(res => {
         const tutors = loadState('tutors', {});
-        const found = Object.values(tutors).find(t => 
-          (t.email === creds.email || t.staffNumber === creds.staffNumber) && 
+        const found = Object.values(tutors).find(t =>
+          (t.email === creds.email || t.staffNumber === creds.staffNumber) &&
           (!creds.password || creds.password === t.password)
         );
         if (found) res({ ok: true, tutor: found });
@@ -78,7 +74,8 @@ Tutor-facing frontend logic (UJ, UP, WITS Tutor Portals)
       });
     },
     fetchTutorRequests(tutorId) {
-      const all = JSON.parse(localStorage.getItem('uni-help') || '{}').requests || [];
+      const global = JSON.parse(localStorage.getItem('uni-help') || '{}');
+      const all = global.requests || [];
       return Promise.resolve(all.filter(r => r.providerId === tutorId));
     },
     updateRequest(reqId, patch) {
@@ -90,34 +87,51 @@ Tutor-facing frontend logic (UJ, UP, WITS Tutor Portals)
         global.requests = reqs;
         localStorage.setItem('uni-help', JSON.stringify(global));
       }
-      return Promise.resolve({ ok: true, request: reqs[i] });
-    },
+      return Promise.resolve({ ok: true });
+    }
   };
 
   // -------------- UI CREATION -----------------
-  function createDashboardRoot() {
-    const welcome = findWelcomeNode();
-    const wrap = el('div', { class: 'tutor-dashboard-root', style: { display: 'flex', justifyContent: 'center', padding: '20px' } });
-    const box = el('div', { style: { width: '100%', maxWidth: '1100px', background: 'rgba(255,255,255,0.95)', borderRadius: '12px', padding: '18px', boxShadow: '0 6px 24px rgba(0,0,0,0.1)' } });
-    wrap.appendChild(box);
-    if (welcome && welcome.parentNode) welcome.parentNode.replaceChild(wrap, welcome);
-    else document.body.appendChild(wrap);
-    return box;
-  }
-
   function findWelcomeNode() {
-    const c = qsa('body *');
-    for (const el of c) {
-      const txt = (el.textContent || '').toLowerCase();
-      if (txt.includes('welcome')) return el;
+    for (const n of qsa('body *')) {
+      if ((n.textContent || '').toLowerCase().includes('welcome')) return n;
     }
     return null;
   }
 
+  function createDashboardRoot() {
+    const welcome = findWelcomeNode();
+    const wrap = el('div', {
+      class: 'tutor-dashboard-root',
+      style: { display: 'flex', justifyContent: 'center', padding: '20px' }
+    });
+    const box = el('div', {
+      style: {
+        width: '100%',
+        maxWidth: '1100px',
+        background: 'rgba(255,255,255,0.95)',
+        borderRadius: '12px',
+        padding: '18px',
+        boxShadow: '0 6px 24px rgba(0,0,0,0.1)'
+      }
+    });
+    wrap.appendChild(box);
+    if (welcome && welcome.parentNode)
+      welcome.parentNode.replaceChild(wrap, welcome);
+    else document.body.appendChild(wrap);
+    return box;
+  }
+
   // -------------- DASHBOARD -----------------
-  async function initDashboard(root, tutor, university) {
-    // Header
-    const head = el('div', { style: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' } });
+  async function initDashboard(root, tutor, uni) {
+    const head = el('div', {
+      style: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: '12px'
+      }
+    });
     head.appendChild(el('div', {}, [`Welcome ${tutor?.name || 'Tutor'}`]));
     const actions = el('div', { style: { display: 'flex', gap: '8px' } });
     const btnProfile = el('button', {}, 'Profile');
@@ -129,77 +143,72 @@ Tutor-facing frontend logic (UJ, UP, WITS Tutor Portals)
     btnProfile.onclick = () => showProfileModal(tutor);
     btnLogout.onclick = () => { saveState('currentTutor', null); location.reload(); };
 
-    // Layout: Left (availability + schedule), Center (requests), Right (notifications + ratings)
-    const grid = el('div', { style: { display: 'grid', gridTemplateColumns: '320px 1fr 320px', gap: '12px' } });
-    const left = el('div', {});
-    const middle = el('div', {});
-    const right = el('div', {});
+    const grid = el('div', {
+      style: { display: 'grid', gridTemplateColumns: '320px 1fr 320px', gap: '12px' }
+    });
+    const left = el('div'), mid = el('div'), right = el('div');
 
     left.appendChild(buildAvailabilityPanel(tutor));
     left.appendChild(buildSchedulePanel(tutor));
-
-    middle.appendChild(await buildRequestsPanel(tutor));
-
+    mid.appendChild(await buildRequestsPanel(tutor));
     right.appendChild(buildNotificationsPanel(tutor));
     right.appendChild(buildRatingsPanel(tutor));
 
-    grid.append(left, middle, right);
+    grid.append(left, mid, right);
     root.appendChild(grid);
   }
 
-  // ----------- PANELS -----------
-  function buildAvailabilityPanel(tutor) {
-    const p = el('div', { style: { padding: '12px', border: '1px solid #eee', borderRadius: '8px', background: '#fff' } });
+  // -------- PANELS --------
+  const buildAvailabilityPanel = t => {
+    const p = el('div', { style: panelStyle() });
     p.appendChild(el('h3', {}, 'Availability'));
     const toggle = el('input', { type: 'checkbox' });
-    toggle.checked = tutor?.availableNow || false;
+    toggle.checked = t?.availableNow || false;
     const label = el('label', {}, ['Available now ', toggle]);
     p.appendChild(label);
     toggle.onchange = () => {
-      tutor.availableNow = toggle.checked;
+      t.availableNow = toggle.checked;
       const tutors = loadState('tutors', {});
-      tutors[tutor.id] = tutor;
+      tutors[t.id] = t;
       saveState('tutors', tutors);
       showToast('Availability updated');
     };
     return p;
-  }
+  };
 
-  function buildSchedulePanel(tutor) {
-    const p = el('div', { style: { marginTop: '12px', padding: '12px', border: '1px solid #eee', borderRadius: '8px', background: '#fff' } });
+  const buildSchedulePanel = t => {
+    const p = el('div', { style: panelStyle(true) });
     p.appendChild(el('h3', {}, 'Weekly Schedule'));
-    const input = el('textarea', { placeholder: 'Example: Mon 10-12, Wed 2-4pm', style: { width: '100%', minHeight: '80px' } }, tutor?.schedule || '');
-    const btn = el('button', { style: { marginTop: '8px', padding: '6px 10px' } }, 'Save');
+    const input = el('textarea', { placeholder: 'Mon 10-12, Wed 2-4pm', style: { width: '100%', minHeight: '80px' } }, t?.schedule || '');
+    const btn = el('button', { style: { marginTop: '8px' } }, 'Save');
     btn.onclick = () => {
-      tutor.schedule = input.value;
+      t.schedule = input.value;
       const tutors = loadState('tutors', {});
-      tutors[tutor.id] = tutor;
+      tutors[t.id] = t;
       saveState('tutors', tutors);
       showToast('Schedule saved');
     };
     p.append(input, btn);
     return p;
-  }
+  };
 
-  async function buildRequestsPanel(tutor) {
-    const p = el('div', { style: { padding: '12px', border: '1px solid #eee', borderRadius: '8px', background: '#fff' } });
+  async function buildRequestsPanel(t) {
+    const p = el('div', { style: panelStyle() });
     p.appendChild(el('h3', {}, 'Student Requests'));
-    const list = el('div');
-    p.appendChild(list);
-    const reqs = await fakeServer.fetchTutorRequests(tutor?.id);
+    const list = el('div'); p.appendChild(list);
+    const reqs = await fakeServer.fetchTutorRequests(t?.id);
     if (!reqs.length) list.appendChild(el('div', {}, 'No requests yet'));
     reqs.forEach(r => {
       const row = el('div', { style: { padding: '8px', borderBottom: '1px solid #f2f2f2' } });
       row.appendChild(el('div', { style: { fontWeight: '700' } }, r.studentName));
-      row.appendChild(el('div', { style: { fontSize: '12px', color: '#555' } }, `${r.type} • ${r.mode} • ${new Date(r.datetime).toLocaleString()}`));
+      row.appendChild(el('div', { style: { fontSize: '12px', color: '#555' } },
+        `${r.type} • ${r.mode} • ${new Date(r.datetime).toLocaleString()}`));
       const btns = el('div', { style: { marginTop: '6px', display: 'flex', gap: '6px' } });
       const b1 = el('button', {}, 'Approve');
       const b2 = el('button', {}, 'Reject');
       const b3 = el('button', {}, 'Suggest Time');
-      btns.append(b1, b2, b3);
-      row.appendChild(btns);
+      btns.append(b1, b2, b3); row.appendChild(btns);
       list.appendChild(row);
-
       b1.onclick = async () => { await fakeServer.updateRequest(r.id, { status: 'Approved' }); showToast('Approved'); location.reload(); };
       b2.onclick = async () => { await fakeServer.updateRequest(r.id, { status: 'Declined' }); showToast('Declined'); location.reload(); };
       b3.onclick = () => showSuggestTimeModal(r);
@@ -207,100 +216,134 @@ Tutor-facing frontend logic (UJ, UP, WITS Tutor Portals)
     return p;
   }
 
-  function buildNotificationsPanel(tutor) {
-    const p = el('div', { style: { padding: '12px', border: '1px solid #eee', borderRadius: '8px', background: '#fff' } });
+  const buildNotificationsPanel = () => {
+    const p = el('div', { style: panelStyle() });
     p.appendChild(el('h4', {}, 'Notifications'));
-    p.appendChild(el('div', {}, 'New request notifications will appear here (demo).'));
+    p.appendChild(el('div', {}, 'New request alerts will appear here.'));
     return p;
-  }
+  };
 
-  function buildRatingsPanel(tutor) {
-    const p = el('div', { style: { marginTop: '12px', padding: '12px', border: '1px solid #eee', borderRadius: '8px', background: '#fff' } });
+  const buildRatingsPanel = t => {
+    const p = el('div', { style: panelStyle(true) });
     p.appendChild(el('h4', {}, 'Student Ratings'));
     const allReqs = JSON.parse(localStorage.getItem('uni-help') || '{}').requests || [];
-    const ratings = allReqs.filter(r => r.providerId === tutor.id && r.rating);
+    const ratings = allReqs.filter(r => r.providerId === t.id && r.rating);
     if (!ratings.length) return p.appendChild(el('div', {}, 'No ratings yet')), p;
     ratings.forEach(r => {
       p.appendChild(el('div', { style: { padding: '6px 0', borderBottom: '1px solid #f3f3f3' } },
         `${r.studentName}: ${r.rating}★ – ${r.comment || ''}`));
     });
     return p;
-  }
+  };
 
-  function showProfileModal(tutor) {
+  const panelStyle = (mt = false) => ({
+    padding: '12px',
+    border: '1px solid #eee',
+    borderRadius: '8px',
+    background: '#fff',
+    marginTop: mt ? '12px' : '0'
+  });
+
+  // -------- MODALS --------
+  function showProfileModal(t) {
     const f = el('div');
-    f.appendChild(el('h3', {}, tutor ? 'Edit Profile' : 'Create Profile'));
-    const name = el('input', { placeholder: 'Full name', value: tutor?.name || '' });
-    const email = el('input', { placeholder: 'Email', value: tutor?.email || '' });
-    const staffNum = el('input', { placeholder: 'Staff number', value: tutor?.staffNumber || '' });
-    const bio = el('textarea', { placeholder: 'Short bio', style: { width: '100%', minHeight: '60px' } }, tutor?.bio || '');
-    const modules = el('input', { placeholder: 'Modules (comma separated)', value: tutor?.modules?.join(', ') || '' });
+    f.appendChild(el('h3', {}, t ? 'Edit Profile' : 'Create Profile'));
+    const name = el('input', { placeholder: 'Full name', value: t?.name || '' });
+    const email = el('input', { placeholder: 'Email', value: t?.email || '' });
+    const staff = el('input', { placeholder: 'Staff number', value: t?.staffNumber || '' });
+    const bio = el('textarea', { placeholder: 'Short bio', style: { width: '100%', minHeight: '60px' } }, t?.bio || '');
+    const modules = el('input', { placeholder: 'Modules (comma separated)', value: t?.modules?.join(', ') || '' });
     const photo = el('input', { type: 'file', accept: 'image/*' });
-    const img = el('img', { src: tutor?.photo || '', style: { width: '80px', height: '80px', objectFit: 'cover', display: tutor?.photo ? 'block' : 'none', borderRadius: '8px' } });
-    const saveBtn = el('button', { style: { marginTop: '8px', padding: '8px 12px' } }, 'Save');
-
-    f.append(img, photo, name, email, staffNum, bio, modules, saveBtn);
-
+    const img = el('img', { src: t?.photo || '', style: { width: '80px', height: '80px', objectFit: 'cover', display: t?.photo ? 'block' : 'none', borderRadius: '8px' } });
+    const btn = el('button', { style: { marginTop: '8px', padding: '8px 12px' } }, 'Save');
+    f.append(img, photo, name, email, staff, bio, modules, btn);
     const modal = showModal(f);
     photo.onchange = e => {
       const file = e.target.files[0];
-      const reader = new FileReader();
-      reader.onload = () => { img.src = reader.result; img.style.display = 'block'; };
-      reader.readAsDataURL(file);
+      const r = new FileReader();
+      r.onload = () => { img.src = r.result; img.style.display = 'block'; };
+      r.readAsDataURL(file);
     };
-
-    saveBtn.onclick = async () => {
+    btn.onclick = async () => {
       const profile = {
-        id: tutor?.id,
-        name: name.value,
-        email: email.value,
-        staffNumber: staffNum.value,
-        bio: bio.value,
-        modules: modules.value.split(',').map(s => s.trim()).filter(Boolean),
-        photo: img.src,
+        id: t?.id, name: name.value, email: email.value, staffNumber: staff.value,
+        bio: bio.value, modules: modules.value.split(',').map(s => s.trim()).filter(Boolean),
+        photo: img.src
       };
       const res = await fakeServer.registerTutor(profile);
-      if (res.ok) {
-        saveState('currentTutor', res.tutor);
-        showToast('Profile saved');
-        location.reload();
-      }
+      if (res.ok) { saveState('currentTutor', res.tutor); showToast('Profile saved'); location.reload(); }
     };
   }
 
-  function showSuggestTimeModal(request) {
+  function showSuggestTimeModal(r) {
     const d = el('div');
-    d.appendChild(el('h3', {}, `Suggest another time for ${request.studentName}`));
+    d.appendChild(el('h3', {}, `Suggest another time for ${r.studentName}`));
     const input = el('input', { type: 'datetime-local' });
     const btn = el('button', { style: { marginTop: '8px' } }, 'Send Suggestion');
     d.append(input, btn);
     const modal = showModal(d);
     btn.onclick = async () => {
-      await fakeServer.updateRequest(request.id, { suggestedTime: input.value, status: 'Pending' });
-      showToast('Suggested time sent');
-      location.reload();
+      await fakeServer.updateRequest(r.id, { suggestedTime: input.value, status: 'Pending' });
+      showToast('Suggestion sent'); location.reload();
     };
   }
 
-  // ------------------ MODALS & TOASTS -----------------
-  function showModal(content) {
-    const overlay = el('div', { style: { position: 'fixed', inset: '0', background: 'rgba(0,0,0,0.45)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 9999 } });
-    const box = el('div', { style: { background: '#fff', padding: '20px', borderRadius: '8px', width: 'min(600px,95%)' } });
-    const close = el('button', { style: { position: 'absolute', top: '12px', right: '12px', background: 'transparent', border: 'none', fontSize: '20px' } }, '✕');
+  const showModal = content => {
+    const overlay = el('div', {
+      style: {
+        position: 'fixed', inset: '0', background: 'rgba(0,0,0,0.45)',
+        display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 9999
+      }
+    });
+    const box = el('div', {
+      style: { background: '#fff', padding: '20px', borderRadius: '8px', width: 'min(600px,95%)', position: 'relative' }
+    });
+    const close = el('button', {
+      style: { position: 'absolute', top: '12px', right: '12px', background: 'transparent', border: 'none', fontSize: '20px' }
+    }, '✕');
     close.onclick = () => document.body.removeChild(overlay);
-    box.append(close, content);
-    overlay.appendChild(box);
+    box.append(close, content); overlay.appendChild(box);
     document.body.appendChild(overlay);
     return { overlay, box };
-  }
+  };
 
-  function showToast(msg) {
-    const t = el('div', { style: { position: 'fixed', bottom: '16px', right: '16px', background: '#222', color: '#fff', padding: '10px 14px', borderRadius: '8px', zIndex: 10000 } }, msg);
+  const showToast = msg => {
+    const t = el('div', {
+      style: {
+        position: 'fixed', bottom: '16px', right: '16px', background: '#222',
+        color: '#fff', padding: '10px 14px', borderRadius: '8px', zIndex: 10000
+      }
+    }, msg);
     document.body.appendChild(t);
     setTimeout(() => t.remove(), 3000);
+  };
+
+  // -------- LOGIN / REGISTER --------
+  function showAuthModal(uni, root) {
+    const d = el('div');
+    d.appendChild(el('h3', {}, `${uni.toUpperCase()} Tutor Login / Register`));
+    const email = el('input', { placeholder: 'Email' });
+    const staff = el('input', { placeholder: 'Staff number' });
+    const pass = el('input', { type: 'password', placeholder: 'Password' });
+    const btnLogin = el('button', { style: { marginRight: '8px' } }, 'Login');
+    const btnReg = el('button', {}, 'Register');
+    d.append(email, staff, pass, el('div', { style: { marginTop: '8px' } }, [btnLogin, btnReg]));
+    root.appendChild(d);
+
+    btnLogin.onclick = async () => {
+      const creds = { email: email.value, staffNumber: staff.value, password: pass.value };
+      const res = await fakeServer.loginTutor(creds);
+      if (res.ok) { saveState('currentTutor', res.tutor); showToast('Login successful'); location.reload(); }
+      else showToast('Login failed');
+    };
+    btnReg.onclick = async () => {
+      const profile = { email: email.value, staffNumber: staff.value, password: pass.value, name: email.value.split('@')[0] };
+      const res = await fakeServer.registerTutor(profile);
+      if (res.ok) { saveState('currentTutor', res.tutor); showToast('Registered'); location.reload(); }
+    };
   }
 
-  // ------------------ INIT -----------------
+  // -------- INIT --------
   function init() {
     const uni = detectUniversity();
     if (!isTutorPage()) return;
@@ -310,12 +353,6 @@ Tutor-facing frontend logic (UJ, UP, WITS Tutor Portals)
     else showAuthModal(uni, root);
   }
 
-  function showAuthModal(uni, root) {
-    const d = el('div');
-    d.appendChild(el('h3', {}, 'Tutor Login / Register'));
-    const email = el('input', { placeholder: 'Email' });
-    const staff = el('input', { placeholder: 'Staff number' });
-    const pass = el('input', { placeholder: 'Password', type: 'password' });
-    const btnLogin = el('button', {}, 'Login');
-    const btnReg = el('button', {}, 'Register');
-    d.append(email, staff, pass, el('div',
+  document.addEventListener('DOMContentLoaded', init);
+})();
+
