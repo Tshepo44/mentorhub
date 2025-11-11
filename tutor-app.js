@@ -318,26 +318,40 @@ Tutor-facing frontend logic (UJ, UP, WITS Tutor Portals)
     setTimeout(() => t.remove(), 3000);
   };
 
+  function showAuthModal(uni, root) {
+  const d = el('div');
+  d.appendChild(el('h3', {}, `${uni.toUpperCase()} Tutor Login / Register`));
+  const email = el('input', { placeholder: 'Email' });
+  const staff = el('input', { placeholder: 'Staff number' });
+  const pass = el('input', { type: 'password', placeholder: 'Password' });
+  const btnLogin = el('button', { style: { marginRight: '8px' } }, 'Login');
+  const btnReg = el('button', {}, 'Register');
+  d.append(email, staff, pass, el('div', { style: { marginTop: '8px' } }, [btnLogin, btnReg]));
+  root.appendChild(d);
+
+  btnLogin.onclick = async () => {
+    const creds = { email: email.value, staffNumber: staff.value, password: pass.value };
+    const res = await fakeServer.loginTutor(creds);
+    if (res.ok) { saveState('currentTutor', res.tutor); showToast('Login successful'); location.reload(); }
+    else showToast('Login failed');
+  };
+  btnReg.onclick = async () => {
+    const profile = { email: email.value, staffNumber: staff.value, password: pass.value, name: email.value.split('@')[0] };
+    const res = await fakeServer.registerTutor(profile);
+    if (res.ok) { saveState('currentTutor', res.tutor); showToast('Registered'); location.reload(); }
+  };
+}
+
 
   // -------- INIT --------
-  function init() {
+function init() {
   const uni = detectUniversity();
   if (!isTutorPage()) return;
   const root = createDashboardRoot();
-
-  // 👇 Skip login/register — go straight to dashboard
-  const defaultTutor = {
-    id: 'auto-tutor-' + uni,
-    name: uni.toUpperCase() + ' Tutor',
-    email: `${uni}@mentorhub.edu`,
-    staffNumber: `TUT-${uni.toUpperCase()}`,
-    bio: 'Default demo tutor profile for ' + uni.toUpperCase(),
-    modules: ['Demo Module 1', 'Demo Module 2'],
-    availableNow: true
-  };
-
-  saveState('currentTutor', defaultTutor);
-  initDashboard(root, defaultTutor, uni);
+  const tutor = loadState('currentTutor', null);
+  if (tutor) initDashboard(root, tutor, uni);
+  else showAuthModal(uni, root);
 }
 
 document.addEventListener('DOMContentLoaded', init);
+
