@@ -2,23 +2,30 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Tutor App - UP</title>
+    <title>UP Tutor</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f4; }
-        h1 { text-align: center; color: #2c3e50; }
-        .tutor-card { background: #fff; margin: 10px; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.2);}
-        button { margin-top: 10px; padding: 5px 10px; cursor: pointer; }
-        #controls { text-align: center; margin: 20px; }
+        body { font-family: Arial; background: #f0f4f8; color: #333; }
+        header { background: #1e90ff; color: white; padding: 10px; text-align: center; }
+        #requests { display: flex; flex-direction: column; gap: 10px; margin: 10px; }
+        .request-card { background: white; padding: 10px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);}
+        #analytics { display: flex; gap: 10px; margin: 10px; }
+        .radial { width: 80px; height: 80px; border: 4px solid #1e90ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-direction: column; font-size: 12px; }
+        #video, #resources { margin: 10px; }
+        button { margin: 10px; padding: 10px 15px; background: #1e90ff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #0f71d0; }
     </style>
 </head>
-<body id="UP">
-    <h1>University of Pretoria Tutors</h1>
-    <div id="controls">
-        <button id="view-bookings">View Bookings</button>
-        <button id="back-to-tutors">Back to Tutors</button>
-    </div>
-    <div id="tutors-container"></div>
+<body>
+    <header>
+        <h1 id="university"></h1>
+    </header>
+    <button id="generate">Generate Student Request</button>
+    <section id="requests"></section>
+    <section id="analytics"></section>
+    <section id="video"></section>
+    <section id="resources"></section>
 
     <script src="tutor-app.js"></script>
 </body>
 </html>
+
