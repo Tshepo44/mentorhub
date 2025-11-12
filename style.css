@@ -183,12 +183,12 @@ padding: 0;
 }  
 
 .top-left-logo {
-  position: fixed; /* keeps it in top-left of the viewport */
-  top: 20px;       /* adjust distance from top */
-  left: 20px;      /* adjust distance from left */
-  width: 120px;    /* logo size */
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 120px;
   height: auto;
-  z-index: 1001;   /* above overlay (overlay z-index is 0) */
+  z-index: 1000;
 }
  
 
@@ -351,6 +351,7 @@ text-decoration: underline;
   z-index: 9999; /* ensures it’s above any layer */
   display: block; /* force visible */
 }
+
 
 
 
