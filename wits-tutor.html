@@ -2,22 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Tutor App - WITS</title>
-    <style>
-        body { font-family: 'Courier New', monospace; background-color: #fff3e0; }
-        h1 { text-align: center; color: #bf360c; }
-        .tutor-card { background: #fff; margin: 10px; padding: 15px; border-radius: 5px; border-left: 5px solid #bf360c;}
-        button { margin-top: 10px; padding: 6px 12px; cursor: pointer; background: #bf360c; color: #fff; border: none; border-radius: 5px;}
-        #controls { text-align: center; margin: 20px; }
-    </style>
+    <title>WITS Tutor</title>
 </head>
-<body id="WITS">
-    <h1>Wits University Tutors</h1>
-    <div id="controls">
-        <button id="view-bookings">View Bookings</button>
-        <button id="back-to-tutors">Back to Tutors</button>
-    </div>
-    <div id="tutors-container"></div>
+<body>
+    <header>
+        <h1 id="university"></h1>
+    </header>
+    <button id="generate">Generate Student Request</button>
+    <section id="requests"></section>
+    <section id="analytics"></section>
+    <section id="video"></section>
+    <section id="resources"></section>
 
     <script src="tutor-app.js"></script>
 </body>
