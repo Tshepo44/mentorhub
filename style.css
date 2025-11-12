@@ -182,21 +182,15 @@ padding: 0;
 
 }  
 
-.top-left-logo {  
-
-position: absolute; /* places it outside the normal flow */  
-
-top: 10px; /* distance from top of page */  
-
-left: 10px; /* distance from left edge */  
-
-width: 120px; /* adjust size if needed */  
-
-height: auto;  
-
-z-index: 1000; /* ensures it stays on top */  
-
-}  
+.top-left-logo {
+  position: fixed; /* keeps it in top-left of the viewport */
+  top: 20px;       /* adjust distance from top */
+  left: 20px;      /* adjust distance from left */
+  width: 120px;    /* logo size */
+  height: auto;
+  z-index: 1001;   /* above overlay (overlay z-index is 0) */
+}
+ 
 
 /* --- Forgot Password (Blue) --- */  
 
@@ -357,6 +351,7 @@ text-decoration: underline;
   z-index: 9999; /* ensures it’s above any layer */
   display: block; /* force visible */
 }
+
 
 
 
