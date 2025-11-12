@@ -900,7 +900,8 @@
     const uni = detectUni();
     const cont = qs(".portal-container") || document.body;
     const stored = load("currentCounsellor");
-    let counsellor = stored;
+    let counsellor = stored || {};   // keep stored data if any, otherwise new object
+    counsellor.university = detectUni(); // **force current portal’s university**
 
     if (!counsellor) {
       // Improved mock login prompt (keeps parity with your earlier flow)
