@@ -5,10 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>UP Counselling Portal</title>
 
-  <!-- Favicon -->
+  <!-- ✅ Favicon -->
   <link rel="icon" type="image/png" href="assets/logos/up.png" />
 
-  <!-- Main Styles -->
+  <!-- ✅ NEW: Font + Meta info -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="University of Pretoria Counselling Portal for managing student sessions, reports, and appointments.">
+  <meta name="author" content="University of Pretoria">
+
+  <!-- ✅ Styles -->
   <style>
     /* === GLOBAL RESETS === */
     * {
@@ -29,6 +34,7 @@
       overflow-x: hidden;
     }
 
+    /* HEADER */
     .portal-header {
       width: 100%;
       display: flex;
@@ -45,6 +51,12 @@
 
     .portal-header img {
       height: 56px;
+      transition: 0.3s;
+    }
+
+    /* ✅ NEW: hover glow for UP logo */
+    .portal-header img:hover {
+      filter: drop-shadow(0 0 6px rgba(255, 200, 0, 0.7));
     }
 
     .portal-title {
@@ -54,11 +66,12 @@
       text-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
     }
 
+    /* MAIN CONTAINER */
     .portal-container {
       max-width: 1200px;
       width: 100%;
       margin: 40px auto;
-      background: rgba(255, 255, 255, 0.85);
+      background: rgba(255, 255, 255, 0.9);
       backdrop-filter: blur(14px);
       border-radius: 16px;
       padding: 30px 40px;
@@ -87,6 +100,39 @@
       margin-bottom: 20px;
     }
 
+    /* ✅ NEW: Dashboard cards */
+    .portal-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-top: 25px;
+    }
+
+    .action-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+      transition: transform 0.25s, box-shadow 0.25s;
+      cursor: pointer;
+    }
+
+    .action-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .action-card img {
+      height: 60px;
+      margin-bottom: 10px;
+    }
+
+    .action-card h3 {
+      color: #004b8d;
+      font-weight: 600;
+    }
+
     footer {
       margin-top: 40px;
       font-size: 13px;
@@ -110,8 +156,8 @@
     }
   </style>
 </head>
-<body class="portal-page up-counselling">
 
+<body class="portal-page up-counselling">
   <header class="portal-header">
     <img src="assets/logos/up.png" alt="UP Logo" class="portal-logo" />
     <div class="portal-title">University of Pretoria Counselling Portal</div>
@@ -122,9 +168,27 @@
 
     <section class="portal-welcome">
       <h1>Welcome, Counsellor 🧑‍⚕️</h1>
-      <p>
-        Manage your counselling profile, student appointments, availability, sessions, and reports — all in one place.
-      </p>
+      <p>Manage your counselling profile, student appointments, availability, sessions, and reports — all in one place.</p>
+    </section>
+
+    <!-- ✅ NEW: Dashboard cards for counsellor -->
+    <section class="portal-actions">
+      <div class="action-card">
+        <img src="assets/icons/appointments.png" alt="Appointments">
+        <h3>Appointments</h3>
+      </div>
+      <div class="action-card">
+        <img src="assets/icons/schedule.png" alt="Schedule">
+        <h3>Schedule</h3>
+      </div>
+      <div class="action-card">
+        <img src="assets/icons/reports.png" alt="Reports">
+        <h3>Reports</h3>
+      </div>
+      <div class="action-card">
+        <img src="assets/icons/profile.png" alt="Profile">
+        <h3>My Profile</h3>
+      </div>
     </section>
   </main>
 
@@ -135,3 +199,4 @@
   <script src="./counselling-app-pro.js" defer></script>
 </body>
 </html>
+
