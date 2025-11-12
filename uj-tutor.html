@@ -2,25 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Tutor App - UJ</title>
-    <style>
-        body { font-family: Verdana, sans-serif; background-color: #e8f0fe; }
-        h1 { text-align: center; color: #1a237e; }
-        .tutor-card { background: #fff; margin: 10px; padding: 15px; border-radius: 10px; border: 1px solid #1a237e;}
-        button { margin-top: 10px; padding: 6px 12px; cursor: pointer; background: #1a237e; color: #fff; border: none; border-radius: 5px;}
-        #controls { text-align: center; margin: 20px; }
-    </style>
+    <title>UJ Tutor</title>
+    <link rel="stylesheet" href="tutor-app.css">
 </head>
-<body id="UJ">
-    <h1>University of Johannesburg Tutors</h1>
-    <div id="controls">
-        <button id="view-bookings">View Bookings</button>
-        <button id="back-to-tutors">Back to Tutors</button>
-    </div>
-    <div id="tutors-container"></div>
+<body>
+    <header>
+        <h1 id="university"></h1>
+    </header>
+    <button id="generate">Generate Student Request</button>
+    <section id="requests"></section>
+    <section id="analytics"></section>
+    <section id="video"></section>
+    <section id="resources"></section>
 
     <script src="tutor-app.js"></script>
 </body>
 </html>
+
 
 
