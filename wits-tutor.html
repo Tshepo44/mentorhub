@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WITS Tutor Portal</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Tutor App - WITS</title>
+    <style>
+        body { font-family: 'Courier New', monospace; background-color: #fff3e0; }
+        h1 { text-align: center; color: #bf360c; }
+        .tutor-card { background: #fff; margin: 10px; padding: 15px; border-radius: 5px; border-left: 5px solid #bf360c;}
+        button { margin-top: 10px; padding: 6px 12px; cursor: pointer; background: #bf360c; color: #fff; border: none; border-radius: 5px;}
+        #controls { text-align: center; margin: 20px; }
+    </style>
 </head>
-<body class="portal-page wits-tutor">
-  <img src="assets/logos/wits.png" alt="WITS Logo" class="portal-logo">
-  <div class="portal-container">
-    <h1>Welcome, Tutor 👩‍🏫</h1>
-    <p>This is your WITS tutor dashboard.</p>
-  </div>
+<body id="WITS">
+    <h1>Wits University Tutors</h1>
+    <div id="controls">
+        <button id="view-bookings">View Bookings</button>
+        <button id="back-to-tutors">Back to Tutors</button>
+    </div>
+    <div id="tutors-container"></div>
 
-  <script src="./tutor-app.js" defer></script>
-
+    <script src="tutor-app.js"></script>
 </body>
 </html>
