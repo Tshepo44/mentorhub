@@ -1,93 +1,106 @@
-// ====== tutor-app.js ======
-// This handles all logic for the Tutor App
+// tutor-app.js
+// All-in-one frontend + local "backend" logic for UP, UJ, WITS tutor app
 
-// Example data for subjects and tutors
-const tutorsData = {
-    "UP": [
-        { name: "Alice", subject: "Math" },
-        { name: "Bob", subject: "Physics" }
-    ],
-    "UJ": [
-        { name: "Charlie", subject: "English" },
-        { name: "Diana", subject: "Biology" }
-    ],
-    "WITS": [
-        { name: "Eve", subject: "Chemistry" },
-        { name: "Frank", subject: "Computer Science" }
-    ]
+// --- UNIVERSITY CONFIG ---
+const universityData = {
+    "UP": { color: "#1e90ff" },
+    "UJ": { color: "#ff4500" },
+    "WITS": { color: "#32cd32" }
 };
 
-// Detect current university from body id
-function getUniversity() {
-    return document.body.id; // UP / UJ / WITS
+// Detect university from HTML title
+const university = document.title.split(" ")[0] || "UP";
+
+// --- MOCK STUDENT REQUESTS ---
+let studentRequests = [];
+const subjects = ["Math", "Physics", "Chemistry", "Biology", "Computer Science"];
+const topics = ["Algebra", "Mechanics", "Organic Chemistry", "Genetics", "Algorithms"];
+const names = ["Alice", "Bob", "Charlie", "Diana", "Ethan"];
+
+// Generate random student request
+function generateRequest() {
+    const student = names[Math.floor(Math.random() * names.length)];
+    const subject = subjects[Math.floor(Math.random() * subjects.length)];
+    const topic = topics[Math.floor(Math.random() * topics.length)];
+    const difficulty = ["Easy", "Medium", "Hard"][Math.floor(Math.random() * 3)];
+    const request = {
+        student,
+        subject,
+        topic,
+        difficulty,
+        time: new Date().toLocaleTimeString()
+    };
+    studentRequests.push(request);
+    displayRequests();
+    updateAnalytics();
 }
 
-// Render tutors dynamically
-function renderTutors() {
-    const uni = getUniversity();
-    const container = document.getElementById("tutors-container");
+// --- DISPLAY STUDENT REQUESTS ---
+function displayRequests() {
+    const container = document.getElementById("requests");
     container.innerHTML = "";
-
-    if (!tutorsData[uni]) return;
-
-    tutorsData[uni].forEach(tutor => {
-        const div = document.createElement("div");
-        div.classList.add("tutor-card");
-        div.innerHTML = `
-            <h3>${tutor.name}</h3>
-            <p>Subject: ${tutor.subject}</p>
-            <button onclick="bookTutor('${tutor.name}')">Book</button>
+    studentRequests.slice(-5).reverse().forEach(req => {
+        const card = document.createElement("div");
+        card.className = "request-card";
+        card.innerHTML = `
+            <h3>${req.student}</h3>
+            <p>Subject: ${req.subject}</p>
+            <p>Topic: ${req.topic}</p>
+            <p>Difficulty: ${req.difficulty}</p>
+            <p><small>${req.time}</small></p>
         `;
-        container.appendChild(div);
+        container.appendChild(card);
     });
 }
 
-// Book a tutor (local storage)
-function bookTutor(name) {
-    const uni = getUniversity();
-    const bookings = JSON.parse(localStorage.getItem("bookings") || "{}");
-    if (!bookings[uni]) bookings[uni] = [];
-    bookings[uni].push({ name, date: new Date().toLocaleString() });
-    localStorage.setItem("bookings", JSON.stringify(bookings));
-    alert(`Booked ${name} successfully!`);
-}
-
-// View bookings
-function viewBookings() {
-    const uni = getUniversity();
-    const bookings = JSON.parse(localStorage.getItem("bookings") || "{}");
-    const uniBookings = bookings[uni] || [];
-    const container = document.getElementById("tutors-container");
-    container.innerHTML = "<h2>Your Bookings</h2>";
-
-    if (uniBookings.length === 0) {
-        container.innerHTML += "<p>No bookings yet.</p>";
-        return;
-    }
-
-    uniBookings.forEach(b => {
+// --- ANALYTICS DASHBOARD ---
+function updateAnalytics() {
+    const analytics = document.getElementById("analytics");
+    const subjectCount = {};
+    subjects.forEach(s => subjectCount[s] = 0);
+    studentRequests.forEach(r => subjectCount[r.subject]++);
+    
+    // Radial chart (simple)
+    analytics.innerHTML = "";
+    subjects.forEach(s => {
         const div = document.createElement("div");
-        div.classList.add("tutor-card");
-        div.innerHTML = `
-            <h3>${b.name}</h3>
-            <p>Booked at: ${b.date}</p>
-        `;
-        container.appendChild(div);
+        div.className = "radial";
+        div.style.borderColor = universityData[university].color;
+        div.innerHTML = `<span>${s}: ${subjectCount[s]}</span>`;
+        analytics.appendChild(div);
     });
 }
 
-// Initialize
-document.addEventListener("DOMContentLoaded", () => {
-    renderTutors();
+// --- VIDEO & RESOURCES ---
+function loadResources() {
+    const video = document.getElementById("video");
+    video.innerHTML = `
+        <video width="300" controls>
+            <source src="sample-video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    `;
+    const resources = document.getElementById("resources");
+    resources.innerHTML = `
+        <ul>
+            <li>Resource 1</li>
+            <li>Resource 2</li>
+            <li>Resource 3</li>
+        </ul>
+    `;
+}
 
-    document.getElementById("view-bookings").addEventListener("click", () => {
-        viewBookings();
-    });
+// --- INIT ---
+function initApp() {
+    document.getElementById("university").textContent = university;
+    document.getElementById("generate").addEventListener("click", generateRequest);
+    loadResources();
+    updateAnalytics();
+}
 
-    document.getElementById("back-to-tutors").addEventListener("click", () => {
-        renderTutors();
-    });
-});
+// Wait for DOM
+document.addEventListener("DOMContentLoaded", initApp);
+
 
 
 
