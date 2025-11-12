@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UP Tutor Portal</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Tutor App - UP</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; }
+        h1 { text-align: center; color: #2c3e50; }
+        .tutor-card { background: #fff; margin: 10px; padding: 15px; border-radius: 8px; box-shadow: 0 0 5px rgba(0,0,0,0.2);}
+        button { margin-top: 10px; padding: 5px 10px; cursor: pointer; }
+        #controls { text-align: center; margin: 20px; }
+    </style>
 </head>
-<body class="portal-page up-tutor">
-    <!-- Top Left Logo -->
-  <img src="assets/logos/up.png" alt="UP Logo" class="portal-logo">
-  <div class="portal-container">
-    <h1>Welcome, Tutor 👩‍🏫</h1>
-    <p>This is your UP tutor dashboard.</p>
-  </div>
+<body id="UP">
+    <h1>University of Pretoria Tutors</h1>
+    <div id="controls">
+        <button id="view-bookings">View Bookings</button>
+        <button id="back-to-tutors">Back to Tutors</button>
+    </div>
+    <div id="tutors-container"></div>
 
-  <script src="./tutor-app.js" defer></script>
-
+    <script src="tutor-app.js"></script>
 </body>
 </html>
