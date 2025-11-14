@@ -1,5 +1,5 @@
 /* ============================================================
-   wits-admin-app-pro.js
+   uj-admin-app-pro.js
    Complete Admin Portal Frontend + Mock Backend
    Version: 1.0 (Admin — Hybrid AI–Material Design)
    Features:
@@ -60,12 +60,12 @@
     const users = load("users", null);
     if (!users) {
       const sampleTutors = [
-        { id: uid("u-"), role: "tutor", name: "Alice M", email: "alice@wits.ac.za", suspended: false },
-        { id: uid("u-"), role: "tutor", name: "Bongani K", email: "bongani@wits.ac.za", suspended: false },
-        { id: uid("u-"), role: "tutor", name: "Chen L", email: "chen@wits.ac.za", suspended: false },
+        { id: uid("u-"), role: "tutor", name: "Alice M", email: "alice@uj.ac.za", suspended: false },
+        { id: uid("u-"), role: "tutor", name: "Bongani K", email: "bongani@uj.ac.za", suspended: false },
+        { id: uid("u-"), role: "tutor", name: "Chen L", email: "chen@uj.ac.za", suspended: false },
       ];
       const sampleCounsellors = [
-        { id: uid("u-"), role: "counsellor", name: "Dr. Peters", email: "peters@wits.ac.za", suspended: false },
+        { id: uid("u-"), role: "counsellor", name: "Dr. Peters", email: "peters@uj.ac.za", suspended: false },
       ];
       save("users", [...sampleTutors, ...sampleCounsellors]);
     }
@@ -280,7 +280,7 @@
     root.innerHTML = `
       <style>
         :root {
-          --wits-main:#002147;
+          --uj-main:#002147;
           --accent:#e8b500;
         }
         .admin-dashboard {
@@ -660,7 +660,7 @@
     setTimeout(() => t.remove(), 2500);
   }
 
- const uni = "wits"; // instead of detectUni()
+ const uni = "uj"; // instead of detectUni()
    
   /* -------------------------
      Main init
